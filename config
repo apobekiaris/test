@@ -1,0 +1,67 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+	hideDotFiles = dotGitOnly
+[remote "apobekiaris"]
+	url = git@github.com:apobekiaris/eXpand.git
+	puttykeyfile = C:/DropBox/Other/putty/apobekiaris.ppk
+	fetch = +refs/heads/*:refs/remotes/apobekiaris/*
+[submodule "Support"]
+	url = https://github.com/apobekiaris/Support.git
+[remote "aiyyo"]
+	url = https://github.com/aiyyo/eXpand.git
+	fetch = +refs/heads/*:refs/remotes/aiyyo/*
+[branch "15.2.4"]
+	remote = apobekiaris
+	merge = refs/heads/15.2
+[branch "15.2_old"]
+	remote = apobekiaris
+	merge = refs/heads/15.2
+[branch "15.2.10"]
+	remote = apobekiaris
+	merge = refs/heads/15.2
+[branch "15.2"]
+	remote = apobekiaris
+	merge = refs/heads/15.2
+[remote "jhorv"]
+	url = https://github.com/jhorv/eXpand.git
+	fetch = +refs/heads/*:refs/remotes/jhorv/*
+[branch "16.1"]
+	remote = apobekiaris
+	merge = refs/heads/16.1
+[remote "NighltyNuget"]
+	url = git@bitbucket.org:apostolis_bekiaris/nightlyxpandnuget.git
+	fetch = +refs/heads/*:refs/remotes/NighltyNuget/*
+	puttykeyfile = D:/eXpandFramework/putty/apobekiaris.ppk
+[branch "16.2_old"]
+	remote = apobekiaris
+	merge = refs/heads/16.2
+[branch "SwtichToNewStyle"]
+	remote = apobekiaris
+	merge = refs/heads/16.2
+[remote "expand"]
+	url = git@github.com:expand/eXpand.git
+	fetch = +refs/heads/*:refs/remotes/expand/*
+	puttykeyfile = C:/DropBox/Other/putty/apobekiaris.ppk
+[branch "16.2_1"]
+	remote = apobekiaris
+	merge = refs/heads/16.2
+[branch "16.2_new"]
+	remote = apobekiaris
+	merge = refs/heads/16.2
+[branch "_17.1"]
+	remote = apobekiaris
+	merge = refs/heads/17.1
+[gui]
+	wmstate = normal
+	geometry = 1322x693+152+152 254 315
+[branch "Memory_leak_16.2.4"]
+	remote = expand
+	merge = refs/heads/Memory_leak_16.2.4
+[branch "17.1"]
+	remote = apobekiaris
+	merge = refs/heads/17.1
