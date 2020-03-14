@@ -1,117 +1,27 @@
-resources:
-- repo: self
-  clean: true
-queue:
-  name: Hosted VS2017
-  demands: 
-  - msbuild
-  - visualstudio
-
-  timeoutInMinutes: 100
-
-#Your build pipeline references an undefined variable named ‘NuGetSource’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build pipeline references an undefined variable named ‘DXAssembliesDownloadLink’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build pipeline references an undefined variable named ‘NuGetApiKey’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build pipeline references an undefined variable named ‘NuGetSource’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-steps:
-- powershell: |
-   write-host "NuGetSource=$(NuGetSource)"
-   ### format revision#######
-   $major=$env:ProjectBuildMajorNumber
-   $rev=$env:Build_BuildNumber.Replace($major,"")
-   $rev=$rev.Replace(".","")
-   Write-Host $rev
-   Write-Host "##vso[task.setvariable variable=Build.BuildNumber]$major$rev"
-   Write-Host "Version=$major$rev"
-   
-   ###Change Version#######
-   & $(System.DefaultWorkingDirectory)\Support\Build\ChangeVersion.ps1 "$(System.DefaultWorkingDirectory)" "$major$rev"
-   
-   ### download DX assemblies####
-   $clnt = new-object System.Net.WebClient
-   $url = "$(DXAssembliesDownloadLink)"
-   
-   New-Item -ItemType directory -Path "$(System.DefaultWorkingDirectory)\DX.DLL"
-   $file = "$(System.DefaultWorkingDirectory)\DX.DLL\DX.Zip"
-   write-host "donloading $file"
-   $clnt.DownloadFile($url,$file)
-   
-   write-host "unzipping $file"
-   
-   # Unzip the file to specified location
-   $shell_app=new-object -com shell.application 
-   $zip_file = $shell_app.namespace($file) 
-   $destination = $shell_app.namespace("$(System.DefaultWorkingDirectory)\DX.DLL\") 
-   $destination.Copyhere($zip_file.items())
-   write-host "copy to $destination"
-   set-location "$(System.DefaultWorkingDirectory)\DX.DLL\"
-   get-childitem | foreach {Write-host $_}
-   
-   
-   #### download secure####
-   return
-   New-Item -ItemType directory -Path "$(System.DefaultWorkingDirectory)\Xpand.DLL"
-   $path = $env:DOWNLOADSECUREFILE_SECUREFILEPATH 
-   $fileName=[System.IO.Path]::GetFileName($path)
-   $destination="$(System.DefaultWorkingDirectory)\Xpand.DLL\$fileName"
-   write-host $destination
-   Copy-Item $path $destination -force
-   return
-   #####change DX assmeblies path#####
-   Set-Location "$(System.DefaultWorkingDirectory)\"
-   $newPath="$(System.DefaultWorkingDirectory)\DX.DLL\"
-   Get-ChildItem *.csproj -Recurse |  foreach{
-       Write-Host $_
-       $content=Get-Content $_
-   $patchedPath='<Reference Include="'+$NewPath+'$1'
-       Write-Host $patchedPath
-       $result = $content -ireplace '<Reference Include="(Devexpress[^"]*)', $patchedPath
-   write-host $result
-       Set-Content $_ -Value $result
-   }
-   
-    
-  displayName: BeforeBuild
-
-- task: VSBuild@1
-  displayName: Build
-  inputs:
-    solution: Xpand.build
-
-    msbuildArgs: ' /t:Release /p:Version=$(Build.BuildNumber);SkipClean=yes;DXHintPath=$(System.DefaultWorkingDirectory)\DX.DLL\'
-
-    createLogFile: true
-
-
-- powershell: 'Remove-Item -Recurse -Force "$(System.DefaultWorkingDirectory)\DX.DLL\"' 
-  displayName: AfterBuild
-
-- task: VSBuild@1
-  displayName: Installer
-  inputs:
-    solution: Xpand.Build
-
-    msbuildArgs: '/t:Installer /p:Version=$(Build.BuildNumber)'
-
-
-- powershell: ./ 'Support\Build\Publish-Nuget.ps1' 
-  arguments: '$(NuGetApiKey) $(NuGetSource)'
-
-  displayName: 'Publish-Nuget'
-
-- task: CopyFiles@2
-  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-  inputs:
-    SourceFolder: '$(system.defaultworkingdirectory)'
-
-    Contents: 'Build\_Package\$(Build.BuildNumber)\**'
-
-    TargetFolder: '$(build.artifactstagingdirectory)'
-
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
-  inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
-
-
+trigger: none 
+jobs:
+- job: BuildModules
+  strategy: 
+    parallel: 1
+  pool:
+    vmImage: windows-2019
+  variables:
+    - group: keys
+  steps:
+  - checkout: self
+  # - task: CacheBeta@0
+  #   inputs:
+  #     key: paket8 | paket.lock
+  #     path: $(Pipeline.Workspace)/.nuget/packages
+  #   displayName: Cache NuGet packages
+  - task: PowerShell@2
+    displayName: Build
+    inputs:
+      targetType: inline
+      script: |
+        Write-Verbose
+      # pwsh: true
+      errorActionPreference: continue
+      failOnStderr: false
+      ignoreLASTEXITCODE: true
+  
