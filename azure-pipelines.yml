@@ -20,7 +20,7 @@ jobs:
       targetType: inline
       script: |
         Write-Verbose
-      pwsh: true
+      
       errorActionPreference: stop
       failOnStderr: false
       ignoreLASTEXITCODE: true
