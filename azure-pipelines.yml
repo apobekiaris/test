@@ -19,6 +19,7 @@ jobs:
     inputs:
       targetType: inline
       script: |
+        $VerbosPreference="continue"
         Write-Verbose aaa
       
       errorActionPreference: stop
