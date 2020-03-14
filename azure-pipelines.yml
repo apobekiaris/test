@@ -19,6 +19,8 @@ jobs:
     inputs:
       targetType: inline
       script: |
+        Write-Host "##vso[task.setvariable variable=testvar;]testvalue"
+
         $VerbosPreference="continue"
         Install-Module XpandPwsh
         Write-Verbose aaa
