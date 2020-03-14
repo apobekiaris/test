@@ -22,7 +22,7 @@ jobs:
         $VerbosPreference="continue"
         Write-Verbose "Text" -Verbose
 
-        Write-Verbose aaa
+        Write-Verbose "aaa"
       
       errorActionPreference: stop
       failOnStderr: false
