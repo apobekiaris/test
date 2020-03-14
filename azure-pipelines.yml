@@ -20,6 +20,7 @@ jobs:
       targetType: inline
       script: |
         $VerbosPreference="continue"
+        Install-Module XpandPwsh
         Write-Verbose aaa
       
       errorActionPreference: stop
