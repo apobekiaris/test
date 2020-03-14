@@ -19,7 +19,7 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        Write-Host "##vso[task.setvariable variable=testvar;]testvalue"
+        ##vso[task.logdetail id=new guid;name=project1;type=build;order=1]create new timeline record
 
         $VerbosPreference="continue"
         Install-Module XpandPwsh
