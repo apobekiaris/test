@@ -21,7 +21,7 @@ jobs:
       script: |
         Write-Verbose
       pwsh: true
-      errorActionPreference: continue
+      errorActionPreference: stop
       failOnStderr: false
       ignoreLASTEXITCODE: true
   
