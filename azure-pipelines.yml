@@ -20,7 +20,8 @@ jobs:
       targetType: inline
       script: |
         $VerbosPreference="continue"
-        Write-Host "##vso[task.logdetail id=3039bc44-5e10-47b6-a2bc-d7539bf7cc36;name=project1;type=build;order=1]create new timeline record"
+        Write-Host "##vso[task.logdetail id=3039bc44-5e10-47b6-a2bc-d7539bf7cc36;name=eXpandFramework;type=build;order=1]create new timeline record"
+        Write-Host "##vso[task.logdetail id=a804d160-f69f-4e8a-bdd2-0076d716a01f;name=eXpandFramework;type=build;order=1;starttime=2016/11/27]create new timeline record"
 
         Write-Verbose aaa
       
