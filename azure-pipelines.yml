@@ -19,7 +19,7 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        Write-Verbose
+        Write-Verbose aaa
       
       errorActionPreference: stop
       failOnStderr: false
