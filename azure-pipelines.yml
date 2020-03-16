@@ -20,10 +20,10 @@ jobs:
       targetType: inline
       script: |
         $VerbosPreference="continue"
-        Write-Verbose "Text" -Verbose
+        Write-Verbose 
 
-        Write-Verbose "aaa"
-      
+        
+      pwsh: true
       errorActionPreference: stop
       failOnStderr: false
       ignoreLASTEXITCODE: true
