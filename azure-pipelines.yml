@@ -23,7 +23,7 @@ jobs:
         Write-Verbose 
 
         
-      
+      pwsh: true
       errorActionPreference: stop
       failOnStderr: false
       ignoreLASTEXITCODE: true
