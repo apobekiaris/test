@@ -19,8 +19,8 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        $VerbosPreference="continue"
-        Write-Verbose "test"
+        $VerbosePreference = "Continue"
+        Write-Verbose -Message "test."
 
         
       pwsh: true
