@@ -1,4 +1,4 @@
-# Taste five from the eXpandFramework/DevExpress.XAF Github repository
+# A taste from the eXpandFramework/DevExpress.XAF Github repository
 
 Why only the standalone packages?
 
