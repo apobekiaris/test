@@ -1,4 +1,4 @@
-# Problem solutions from the eXpandFramework/DevExpress.XAF Github repository
+# Problems and solutions from the eXpandFramework/DevExpress.XAF Github repository
 
 1. **Due to the large package number a substantial effort is needed even for simple tasks, like installation, package API discovery and version choosing. How to get the best out of them?**
    </br><u>Traditionally:</u>
